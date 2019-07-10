@@ -2,8 +2,9 @@
 
 export type CategoricalVector = string[];
 
-export type ModeDistance = {
+export type ModeVectorCouple = {
     mode : CategoricalVector,
-    vector : CategoricalVector,
-    distance : number
+    vector : CategoricalVector
 }
+
+export type ModeDistance = ModeVectorCouple & {distance : number}
