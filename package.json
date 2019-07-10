@@ -1,0 +1,9 @@
+{
+  "name": "kmodes",
+  "version": "1.0.0",
+  "description": "Typescript implementation of k-modes clustering algorithm",
+  "main": "index.js",
+  "repository": "https://github.com/theodoretheodorsen/kmodes.git",
+  "author": "carlos <carlosrodriguezraposo@gmail.com>",
+  "license": "MIT"
+}
