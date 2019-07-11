@@ -1,4 +1,5 @@
 import {CategoricalVector} from "./models";
+import * as R from 'ramda';
 
 export const calculateModeVector = (vectors : CategoricalVector[]) : CategoricalVector => {
     let vectorLength = vectors[0].length;
@@ -10,7 +11,12 @@ export const calculateModeVector = (vectors : CategoricalVector[]) : Categorical
     return transpose.map(v => calculateMode(v))
 };
 
-const calculateMode = (vector : string[]) : string => {
-    //TODO
-    return '';
-}
+export const calculateMode = (vector: string[]): string => {
+    return vector.reduce((cum, item) => {
+        let current = R.find(i => i.value === item, cum);
+        if (current == null) return [...cum, {value: item, counter: 1}];
+        let index = cum.indexOf(current);
+        cum[index].counter = cum[index].counter + 1;
+        return cum;
+    }, []).sort((a, b) => b.counter - a.counter)[0].value;
+};
