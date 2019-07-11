@@ -24,7 +24,7 @@ describe('closest mode', () => {
                 ['a', 'b', 'c'],
                 ['c', 'd', 'x']
             ]
-        )).toBe({vector, mode : vector, distance : 0});
+        )).toStrictEqual({vector, mode : vector, distance : 0});
     });
 
     test('of random vectors', () => {
