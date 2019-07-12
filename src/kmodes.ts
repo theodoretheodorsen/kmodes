@@ -23,6 +23,7 @@ const kmodesIteration = (modes : CategoricalVector[], clusters : Cluster[], iter
     }
     clusters.forEach(cluster => cluster.mode = calculateModeVector(cluster.vectors));
     console.log(`Iteration ${iteration}: cost of ${costFunction(clusters)}`);
+    clusters.forEach(cluster => console.log(`Cluster ${cluster.mode} has ${cluster.vectors.length} vectors `));
     return kmodesIteration(getModes(clusters), clusters, iteration + 1, limit);
 };
 
