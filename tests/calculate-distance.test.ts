@@ -1,4 +1,4 @@
-import {calculateDistance, getClosestMode} from "../src/calculate-distance";
+import {calculateDistance, getClusterWithClosestMode} from "../src/calculate-distance";
 
 describe('calculate distance', () => {
     test('of equal vectors', () => {
@@ -14,28 +14,19 @@ describe('calculate distance', () => {
     });
 });
 
-describe('closest mode', () => {
+describe('closest cluster', () => {
     test('of a mode', () => {
         let vector = ['a', 'b', 'c'];
-        expect(getClosestMode(
-            vector
-            , [
-                ['a', 'b', 'c'],
-                ['a', 'b', 'c'],
-                ['c', 'd', 'x']
-            ]
-        )).toStrictEqual({vector, mode : vector, distance : 0});
+        let clusterA = {mode: ['a', 'b', 'c'], vectors: [['a', 'b', 'c'], ['a', 'b', 'c']]};
+        let clusterB = {mode: ['c', 'd', 'x'], vectors: [['c', 'd', 'x']]};
+        let clusters = [clusterA, clusterB];
+        expect(getClusterWithClosestMode(vector, clusters)).toStrictEqual(clusterA);
     });
 
     test('of random vectors', () => {
         let vector =  ['a', 'r', 'r'];
-        let closest = ['a', 'b', 'c'];
-        expect(getClosestMode(
-            vector,
-            [
-                closest,
-                ['c','d', 'x']
-            ]
-        )).toStrictEqual({vector, mode  : closest, distance : 2});
+        let clusterA = {mode: ['a', 'b', 'c'], vectors: [['a', 'b', 'c'], ['a', 'b', 'c']]};
+        let clusterB = {mode: ['c', 'd', 'x'], vectors: [['c', 'd', 'x']]};
+        expect(getClusterWithClosestMode(vector,[clusterA, clusterB])).toStrictEqual(clusterA);
     });
 });

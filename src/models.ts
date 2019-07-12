@@ -7,4 +7,9 @@ export type ModeVectorCouple = {
     vector : CategoricalVector
 }
 
+export type Cluster = {
+    mode : CategoricalVector,
+    vectors : CategoricalVector[]
+}
+
 export type ModeDistance = ModeVectorCouple & {distance : number}

@@ -1,8 +1,9 @@
 {
   "name": "kmodes",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Typescript implementation of k-modes clustering algorithm",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/theodoretheodorsen/kmodes.git",
   "author": "carlos <carlosrodriguezraposo@gmail.com>",
   "license": "MIT",
@@ -12,7 +13,8 @@
   },
   "scripts": {
     "test": "jest",
-    "testWithCoverage": "jest --coverage"
+    "testWithCoverage": "jest --coverage",
+    "prepublish": "tsc"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",

@@ -2,14 +2,15 @@ import {costFunction} from "../src/cost-function";
 
 
 describe('calculate cost function', () => {
-    test('of random distances', () => {
+    test('of single cluster', () => {
         expect(costFunction(
             [
-                {vector: ['a', 'b', 'c'], mode: ['a', 'n', 'c'], distance: 1},
-                {vector: ['a', 'n', 'c'], mode: ['x', 'n', 'c'], distance: 1},
-                {vector: ['c', 'b', 'c'], mode: ['x', 'n', 'c'], distance: 2}
+                {mode : ['a', 'b', 'c'], vectors : [['a', 'x', 'c'], ['a', 'b', 'u'], ['r', 'b', 'c']]}
             ]
             )
-        ).toBe(4);
-    });
+        ).toBe(3);
+    })
 });
+
+
+
