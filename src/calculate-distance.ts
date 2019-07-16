@@ -1,6 +1,5 @@
 import * as R from 'ramda'
-import {CategoricalVector, ModeDistance, Cluster} from "./models";
-
+import {CategoricalVector, Cluster} from "./models";
 /**
  * Calculates distance (aka dissmilarity) between two categorical vectors. They must have the same length
  * @param vectorA
@@ -20,7 +19,7 @@ export const calculateDistance = (vectorA : CategoricalVector, vectorB : Categor
  */
 export const getClusterWithClosestMode = (vector : CategoricalVector, clusters : Cluster[],
                                           processingFunction : (line : string[]) => string[] = (line : string[]) => line) : Cluster => {
-    return clusters.reduce((res, cluster) => {
+    return shuffle(clusters).reduce((res, cluster) => {
         let processedVector = processingFunction(vector);
         let distanceToClusterOfIteration = calculateDistance(processedVector, processingFunction(cluster.mode));
         if (distanceToClusterOfIteration === 0) return cluster;
@@ -28,3 +27,12 @@ export const getClusterWithClosestMode = (vector : CategoricalVector, clusters :
         return distanceToPrevious > distanceToClusterOfIteration ? cluster : res
     })
 };
+
+function shuffle(array: any[]): any[] {
+    const oldArray = [...array];
+    let newArray : any[] = [];
+    while (oldArray.length) {
+        newArray = newArray.concat(oldArray.splice(Math.floor(Math.random() * oldArray.length), 1));
+    }
+    return newArray;
+}

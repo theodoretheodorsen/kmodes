@@ -316,6 +316,10 @@
   dependencies:
     "@types/jest-diff" "*"
 
+"@types/node@^12.6.2":
+  version "12.6.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.4.tgz#e0b5ac3ccbf183cd3c230967c323632d6cf927ae"
+
 "@types/ramda@^0.26.15":
   version "0.26.15"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.15.tgz#217d9d2133f55040bd5db0e67dbbf6ec8509446f"
@@ -2613,6 +2617,14 @@ shebang-regex@^1.0.0:
 shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
+
+shuffle-array@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/shuffle-array/-/shuffle-array-1.0.1.tgz#c4ff3cfe74d16f93730592301b25e6577b12898b"
+
+shuffle.ts@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/shuffle.ts/-/shuffle.ts-1.0.1.tgz#9baa9f0a9269dbd99d2289fd484ee8d7b485f4ae"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
