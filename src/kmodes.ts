@@ -5,26 +5,26 @@ import {calculateModeVector} from "./calculate-mode-vector";
 import {costFunction} from "./cost-function";
 
 
-export const kmodes = (vectors: CategoricalVector[], nbClusters: number, limit: number): CategoricalVector[] => {
+export const kmodes = (vectors: CategoricalVector[], nbClusters: number, limit: number,
+                       processingFunction : (line : string[]) => string[] = (line : string[]) => line): Cluster[] => {
     let clusters = initClusters(vectors, initRandomly(vectors, nbClusters));
-    return kmodesIteration(getModes(clusters), clusters, 0, limit);
+    console.log('Cost of initialization: ' + costFunction(clusters));
+    return kmodesIteration(clusters, 0, limit, processingFunction);
 };
 
-const kmodesIteration = (modes : CategoricalVector[], clusters : Cluster[], iteration : number, limit: number = 10): CategoricalVector[] => {
-    if (iteration >= limit) return modes;
+const kmodesIteration = (clusters : Cluster[], iteration : number, limit: number = 10,
+                         processingFunction : (line : string[]) => string[] = (line : string[]) => line): Cluster[] => {
+    if (iteration >= limit) return clusters;
+    let updatedClusters = clusters.map(c => ({mode : c.mode, vectors : []}));
     for (let cluster of clusters) {
         for (let vector of cluster.vectors) {
-            let closest = getClusterWithClosestMode(vector, clusters);
-            if (closest != cluster) {
-                cluster.vectors = cluster.vectors.filter(v => v! = vector);
-                closest.vectors = [...closest.vectors, vector]
-            }
+            let closest = getClusterWithClosestMode(vector, updatedClusters, processingFunction);
+            closest.vectors = [...closest.vectors, vector];
         }
     }
-    clusters.forEach(cluster => cluster.mode = calculateModeVector(cluster.vectors));
-    console.log(`Iteration ${iteration}: cost of ${costFunction(clusters)}`);
-    clusters.forEach(cluster => console.log(`Cluster ${cluster.mode} has ${cluster.vectors.length} vectors `));
-    return kmodesIteration(getModes(clusters), clusters, iteration + 1, limit);
+    updatedClusters.forEach(cluster => cluster.mode = calculateModeVector(cluster.vectors));
+    console.log(`Iteration ${iteration}: cost of ${costFunction(updatedClusters)}`);
+    return kmodesIteration(updatedClusters, iteration + 1, limit);
 };
 
 const initClusters = (vectors : CategoricalVector[], modes : CategoricalVector[]) : Cluster[] => {

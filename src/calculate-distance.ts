@@ -16,12 +16,15 @@ export const calculateDistance = (vectorA : CategoricalVector, vectorB : Categor
  * For a given vector get the cluster with closest mode
  * @param vector
  * @param clusters
+ * @param processingFunction
  */
-export const getClusterWithClosestMode = (vector : CategoricalVector, clusters : Cluster[]) : Cluster => {
+export const getClusterWithClosestMode = (vector : CategoricalVector, clusters : Cluster[],
+                                          processingFunction : (line : string[]) => string[] = (line : string[]) => line) : Cluster => {
     return clusters.reduce((res, cluster) => {
-        let distanceToClusterOfIteration = calculateDistance(vector, cluster.mode);
+        let processedVector = processingFunction(vector);
+        let distanceToClusterOfIteration = calculateDistance(processedVector, processingFunction(cluster.mode));
         if (distanceToClusterOfIteration === 0) return cluster;
-        let distanceToPrevious = calculateDistance(vector, res.mode);
+        let distanceToPrevious = calculateDistance(processedVector, processingFunction(res.mode));
         return distanceToPrevious > distanceToClusterOfIteration ? cluster : res
     })
 };

@@ -10,5 +10,5 @@ export const initRandomly = (vectors : CategoricalVector[], numberOfClusters : n
         }
         randomArr = [...randomArr, random]
     }
-    return randomArr.map(r => vectors[r])
+    return randomArr.map(r => vectors[r]);
 };
