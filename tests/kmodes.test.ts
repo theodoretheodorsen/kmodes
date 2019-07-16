@@ -6,8 +6,8 @@ describe('run kmodes', () => {
             [['a', 'x', 'c', 'c', 'c','b'], ['a', 'b', 'k', 'r', 'c','b'], ['a', 'b', 'c', 'c', 'd','a']],
             1,
             3
-            )
-        ).toStrictEqual([['a', 'b','c', 'c', 'c', 'b']]);
+            )[0].mode
+        ).toStrictEqual(['a', 'b','c', 'c', 'c', 'b']);
     });
     test('of random vectors bis', () => {
         let modes =  kmodes(
@@ -21,7 +21,7 @@ describe('run kmodes', () => {
             ],
             2,
             3
-        );
+        ).map(cl => cl.mode);
         expect(modes).toContainEqual(['a', 'b', 'c']);
         expect(modes).toContainEqual(['x', 'z','ee']);
     });
