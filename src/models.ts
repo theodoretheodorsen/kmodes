@@ -19,7 +19,13 @@ export type JobResult = {
     cost : number
 }
 
+export type Validation = {
+    averageDistanceInClusters : number[],
+    distanceBetweenModes: any[]
+}
+
 export type KmodesResult = {
     jobs : JobResult[],
-    best : JobResult
+    best : JobResult,
+    validation : Validation
 }

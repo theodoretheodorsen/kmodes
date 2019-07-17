@@ -2,6 +2,7 @@ import {CategoricalVector, Cluster, identity, JobResult, KmodesResult, Processin
 import * as R from "ramda";
 import {logBestJob, runKmodes} from "./src/runKmodes";
 import {getClusterWithClosestMode} from "./src/calculate-distance";
+import {validate} from "./src/validation";
 
 /**
  * Main method to calculate run the clustering of an array of categorical data
@@ -25,7 +26,8 @@ export const kmodes = (
     if (verbose) {
         logBestJob(best);
     }
-    return {jobs, best}
+    let validation = validate(best.clusters);
+    return {jobs, best, validation}
 };
 
 /**
