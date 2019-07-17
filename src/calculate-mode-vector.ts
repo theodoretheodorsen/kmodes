@@ -1,12 +1,12 @@
-import {CategoricalVector} from "./models";
+import {CategoricalVector, identity, ProcessingFunction} from "./models";
 import * as R from 'ramda';
 
-export const calculateModeVector = (vectors : CategoricalVector[]) : CategoricalVector => {
-    let vectorLength = vectors[0].length;
+export const calculateModeVector = (vectors : CategoricalVector[], processingFunction : ProcessingFunction = identity) : CategoricalVector => {
+    let vectorLength = processingFunction(vectors[0]).length;
     let i : number;
     let transpose : string[][] = [];
     for (i = 0; i < vectorLength; i++) {
-        transpose = [...transpose, vectors.map(v => v[i])]
+        transpose = [...transpose, vectors.map(v => processingFunction(v)).map(v => v[i])]
     }
     return transpose.map(v => calculateMode(v))
 };
