@@ -26,7 +26,7 @@ export const kmodes = (
     if (verbose) {
         logBestJob(best);
     }
-    let validation = validate(best.clusters);
+    let validation = validate(best.clusters, processingFunction);
     return {jobs, best, validation}
 };
 

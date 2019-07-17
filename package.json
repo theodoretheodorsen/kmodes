@@ -1,6 +1,6 @@
 {
   "name": "kmodes",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "Typescript implementation of k-modes clustering algorithm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
