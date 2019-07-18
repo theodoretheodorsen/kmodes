@@ -1,6 +1,6 @@
 import {CategoricalVector, Cluster, identity, JobResult, ProcessingFunction} from "./models";
 import {initRandomly} from "./init-modes";
-import {getClusterWithClosestMode} from "./calculate-distance";
+import {getClosestClusters} from "./calculate-distance";
 import {calculateModeVector} from "./calculate-mode-vector";
 import {costFunction} from "./cost-function";
 
@@ -28,7 +28,7 @@ const kmodesIteration = (
     let noVectorChanged = true;
     for (let cluster of clusters) {
         for (let vector of cluster.vectors) {
-            let closest = getClusterWithClosestMode(vector, updatedClusters, processingFunction);
+            let closest = getClosestClusters(vector, updatedClusters, processingFunction);
             closest.vectors = [...closest.vectors, vector];
             if (!noVectorChanged || closest.mode != cluster.mode) noVectorChanged = false;
         }
@@ -49,7 +49,7 @@ const kmodesIteration = (
 const initClusters = (vectors : CategoricalVector[], modes : CategoricalVector[], processingFunction: ProcessingFunction = identity) : Cluster[] => {
     let clusters : Cluster[] = modes.map(m => processingFunction(m)).map((mode, index) => ({mode, vectors : [], number : index}));
     return vectors.reduce((clusters : Cluster[], vector) => {
-        let associatedCluster = getClusterWithClosestMode(vector, clusters, processingFunction);
+        let associatedCluster = getClosestClusters(vector, clusters, processingFunction);
         associatedCluster.vectors = [...associatedCluster.vectors, vector];
         associatedCluster.mode = calculateModeVector(associatedCluster.vectors, processingFunction);
         return clusters;

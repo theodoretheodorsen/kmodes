@@ -1,7 +1,7 @@
 import {CategoricalVector, Cluster, identity, JobResult, KmodesResult, ProcessingFunction} from "./src/models";
 import * as R from "ramda";
 import {logBestJob, runKmodes} from "./src/runKmodes";
-import {getClusterWithClosestMode} from "./src/calculate-distance";
+import {getClosestClusters} from "./src/calculate-distance";
 import {validate} from "./src/validation";
 
 /**
@@ -41,7 +41,7 @@ export const classifyVectors = (
     clusters : Cluster[],
     processingFunction : ProcessingFunction = identity
     ) : CategoricalVector[] => {
-    return vectors.map(vector => [getClusterWithClosestMode(vector, clusters, processingFunction).number.toString(), ...vector])
+    return vectors.map(vector => [getClosestClusters(vector, clusters, processingFunction).number.toString(), ...vector])
 };
 
 

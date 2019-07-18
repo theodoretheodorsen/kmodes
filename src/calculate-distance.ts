@@ -12,27 +12,21 @@ export const calculateDistance = (vectorA : CategoricalVector, vectorB : Categor
 
 
 /**
- * For a given vector get the cluster with closest mode
+ * For a given vector get the cluster(s) with closest mode
  * @param vector
  * @param clusters
  * @param processingFunction
  */
-export const getClusterWithClosestMode = (vector : CategoricalVector, clusters : Cluster[],
-                                          processingFunction : ProcessingFunction = identity) : Cluster => {
-    return shuffle(clusters).reduce((res, cluster) => {
-        let processedVector = processingFunction(vector);
-        let distanceToClusterOfIteration = calculateDistance(processedVector, cluster.mode);
-        if (distanceToClusterOfIteration === 0) return cluster;
-        let distanceToPrevious = calculateDistance(processedVector, res.mode);
-        return distanceToPrevious > distanceToClusterOfIteration ? cluster : res
-    })
+export const getClosestClusters = (vector : CategoricalVector, clusters : Cluster[],
+                                   processingFunction : ProcessingFunction = identity) : Cluster[] => {
+    let processedVector = processingFunction(vector);
+    return clusters.map(cluster => ({cluster, distance : calculateDistance(processedVector, cluster.mode)})).reduce(
+        (res, item) => {
+            if (res.length == 0 || item.distance < res[0].distance) return [item];
+            if (item.distance === res[0].distance) return [...res, item];
+            return res;
+        },
+        []
+    ).map(item => item.cluster);
 };
 
-function shuffle(array: any[]): any[] {
-    const oldArray = [...array];
-    let newArray : any[] = [];
-    while (oldArray.length) {
-        newArray = newArray.concat(oldArray.splice(Math.floor(Math.random() * oldArray.length), 1));
-    }
-    return newArray;
-}
