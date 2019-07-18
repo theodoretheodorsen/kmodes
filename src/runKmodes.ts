@@ -28,7 +28,7 @@ const kmodesIteration = (
     let noVectorChanged = true;
     for (let cluster of clusters) {
         for (let vector of cluster.vectors) {
-            let closest = getClosestClusters(vector, updatedClusters, processingFunction);
+            let closest = getClosestClusters(vector, updatedClusters, processingFunction)[0];
             closest.vectors = [...closest.vectors, vector];
             if (!noVectorChanged || closest.mode != cluster.mode) noVectorChanged = false;
         }
@@ -49,7 +49,7 @@ const kmodesIteration = (
 const initClusters = (vectors : CategoricalVector[], modes : CategoricalVector[], processingFunction: ProcessingFunction = identity) : Cluster[] => {
     let clusters : Cluster[] = modes.map(m => processingFunction(m)).map((mode, index) => ({mode, vectors : [], number : index}));
     return vectors.reduce((clusters : Cluster[], vector) => {
-        let associatedCluster = getClosestClusters(vector, clusters, processingFunction);
+        let associatedCluster = getClosestClusters(vector, clusters, processingFunction)[0];
         associatedCluster.vectors = [...associatedCluster.vectors, vector];
         associatedCluster.mode = calculateModeVector(associatedCluster.vectors, processingFunction);
         return clusters;

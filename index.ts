@@ -41,7 +41,7 @@ export const classifyVectors = (
     clusters : Cluster[],
     processingFunction : ProcessingFunction = identity
     ) : CategoricalVector[] => {
-    return vectors.map(vector => [getClosestClusters(vector, clusters, processingFunction).number.toString(), ...vector])
+    return vectors.map(vector => [JSON.stringify(getClosestClusters(vector, clusters, processingFunction).map(c => c.number)), ...vector])
 };
 
 
